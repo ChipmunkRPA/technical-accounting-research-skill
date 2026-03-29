@@ -9,7 +9,7 @@ description: Research technical accounting treatment and financial statement dis
 
 Handle transaction-specific accounting questions through a fixed sequence: gather facts, confirm output format, research guidance online, apply standards, and deliver a DOCX report.
 
-For formal, thorough memo drafting, this skill should also leverage the local FinResearchClaw repo/workflow as a research-and-drafting enhancement layer when helpful, especially for longer-form technical accounting memoranda, comparative source gathering, and more polished professional output. FinResearchClaw is a support engine for research depth and drafting quality; authoritative accounting conclusions must still be grounded in ASC / SEC / AICPA / clearly labeled interpretive guidance.
+For formal, thorough memo drafting, this skill must leverage the local FinResearchClaw repo/workflow as a research-and-drafting enhancement layer when available, especially for longer-form technical accounting memoranda, comparative source gathering, and more polished professional output. FinResearchClaw is a support engine for research depth and drafting quality; authoritative accounting conclusions must still be grounded in ASC / SEC / AICPA / clearly labeled interpretive guidance.
 
 ## Required Behavior
 
@@ -18,7 +18,7 @@ For formal, thorough memo drafting, this skill should also leverage the local Fi
 - If the user asks for a `memo`, default the deliverable to a `.docx` file saved in the user's `~/Downloads` folder unless the user explicitly requests a different location or format.
 - For `memo` requests, do not post the full memo body directly into chat by default. Instead, generate the DOCX deliverable and reply with a short status note that the file was created and where it was saved.
 - Research the internet before final conclusions, even if guidance seems familiar.
-- For formal/thorough memo requests, use FinResearchClaw as an optional enhancement layer to improve research depth, structure, and drafting quality when available.
+- For formal/thorough memo requests, use FinResearchClaw as a required enhancement layer when available to improve research depth, structure, and drafting quality.
 - Distinguish authoritative guidance from interpretive guidance.
 - Cite sources with links and accessed date in the deliverable.
 - State assumptions explicitly when facts remain unknown.
@@ -52,7 +52,8 @@ For formal, thorough memo drafting, this skill should also leverage the local Fi
 - Prefer primary and authoritative sources first (FASB/SEC/AICPA standard-setting materials).
 - Use Big 4 publications as interpretive support, not sole authority.
 - Invoke FinResearchClaw when the user asks for a formal memo, asks for a thorough or professional memorandum, requests a polished deliverable for management/auditors, or when the issue requires deeper comparative research and more structured drafting.
-- If the request is narrow and straightforward, you may complete the memo without FinResearchClaw.
+- If FinResearchClaw is available, formal `memo` requests should not skip this step.
+- Only skip the FinResearchClaw enhancement path for memo requests if it is unavailable or clearly inapplicable, and if skipped, explicitly state that in the completion note.
 - If using FinResearchClaw, treat it as a research accelerator and drafting assistant only; independently verify accounting conclusions against authoritative and clearly labeled interpretive sources before finalizing.
 - Capture citation labels and URLs for each source used.
 
@@ -63,8 +64,9 @@ For formal, thorough memo drafting, this skill should also leverage the local Fi
 - Evaluate reasonable alternatives and explain rejection rationale.
 - Conclude with recommended accounting treatment, disclosure direction, and key risks.
 - Include journal entry examples when useful for implementation.
-- For formal memo output, prefer a more polished memorandum style with clearer sections, stronger issue framing, and explicit treatment of alternative views considered.
-- When FinResearchClaw is available and the memo would benefit from deeper structure, use it to improve thoroughness and professional drafting quality while preserving accounting-source hierarchy.
+- For formal memo output, produce a polished memorandum style with a complete professional header, well-formed section headings, narrative analysis paragraphs, explicit treatment of alternative views considered, and output quality suitable for management, auditors, or file documentation.
+- When FinResearchClaw is available, use it to improve thoroughness and professional drafting quality while preserving accounting-source hierarchy.
+- Do not allow raw JSON structures, Python dictionary renderings, placeholder header fields, or unformatted source dumps to appear in the final memo.
 - Preferred execution order for formal memo support: (1) authoritative accounting research and fact development first, (2) FinResearchClaw enhancement for research organization / structured drafting, (3) final manual verification against ASC/SEC/AICPA and labeled interpretive guidance, (4) DOCX generation to `~/Downloads`.
 
 ### 6. Draft and Materialize DOCX
@@ -74,10 +76,11 @@ For formal, thorough memo drafting, this skill should also leverage the local Fi
 - Standard formal memo flow:
   1. gather facts and clarifications;
   2. perform authoritative and interpretive accounting research;
-  3. if the memo should be especially formal/thorough, run the FinResearchClaw-supported drafting pass;
-  4. manually validate the final analysis and citations;
+  3. run the FinResearchClaw-supported drafting pass for formal memo requests when available;
+  4. manually validate the final analysis, formatting, section structure, and citations;
   5. generate the final DOCX in `~/Downloads`;
-  6. reply in chat with a short completion note and the saved file path instead of posting the memo body.
+  6. review the finished document for presentation quality before responding;
+  7. reply in chat with a short completion note and the saved file path instead of posting the memo body.
 - Run:
 
 ```bash
@@ -101,6 +104,9 @@ python scripts/build_accounting_report_docx.py \
 - Confirm all significant assumptions are disclosed.
 - Confirm the output format matches user request.
 - Confirm every external source in the analysis has a URL listed in the report.
+- Confirm the final memo reads like a professional memorandum rather than a raw data export.
+- Confirm headers are fully populated (for example To / From / Date / Subject) and that analysis sections render as proper prose, not serialized objects.
+- If a formal memo request did not use FinResearchClaw, explicitly document why not before closing the task.
 
 ## Resources
 
