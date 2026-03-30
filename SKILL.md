@@ -7,9 +7,9 @@ description: Research technical accounting treatment and financial statement dis
 
 ## Overview
 
-Handle transaction-specific accounting questions through a fixed sequence: gather facts, confirm output format, research guidance online, apply standards, and deliver a DOCX report.
+Handle transaction-specific accounting questions through a fixed sequence: gather facts, confirm output format, route the task through the wrapped local FinResearchClaw repo/workflow, research guidance online, apply standards, and deliver the requested output.
 
-For formal, thorough memo drafting, this skill must wrap and leverage the local FinResearchClaw repo/workflow as a required research-and-drafting execution layer whenever the user requests a memo, especially for longer-form technical accounting memoranda, comparative source gathering, and more polished professional output. The skill may create and use a task-local virtual environment when needed to run the repo or supporting document-generation dependencies. FinResearchClaw is a required support engine for research depth and drafting quality in memo mode; authoritative accounting conclusions must still be grounded in ASC / SEC / AICPA / clearly labeled interpretive guidance.
+For all tasks under this skill — memo, email, and q-and-a alike — the workflow must wrap and leverage the local FinResearchClaw repo/workflow as a required research-and-drafting execution layer. This is mandatory, not optional, and applies even when the accounting issue appears straightforward. The skill may create and use a task-local virtual environment when needed to run the repo or supporting document-generation dependencies. FinResearchClaw is a required support engine for research depth and drafting quality across all output modes; authoritative accounting conclusions must still be grounded in ASC / SEC / AICPA / clearly labeled interpretive guidance.
 
 ## Required Behavior
 
@@ -18,8 +18,8 @@ For formal, thorough memo drafting, this skill must wrap and leverage the local 
 - If the user asks for a `memo`, default the deliverable to a `.docx` file saved in the user's `~/Downloads` folder unless the user explicitly requests a different location or format.
 - For `memo` requests, do not post the full memo body directly into chat by default. Instead, generate the DOCX deliverable and reply with a short status note that the file was created and where it was saved.
 - Research the internet before final conclusions, even if guidance seems familiar.
-- For formal/thorough memo requests, use FinResearchClaw as a required execution and drafting layer.
-- The skill may create and activate a task-local virtual environment to run FinResearchClaw, supporting scripts, and DOCX-generation dependencies.
+- For all requests under this skill, use FinResearchClaw as a required wrapped execution and drafting layer.
+- The skill may create and activate a task-local virtual environment to run FinResearchClaw, supporting scripts, and output-generation dependencies.
 - Distinguish authoritative guidance from interpretive guidance.
 - Cite sources with links and accessed date in the deliverable.
 - State assumptions explicitly when facts remain unknown.
@@ -52,10 +52,10 @@ For formal, thorough memo drafting, this skill must wrap and leverage the local 
 - Research sources using the priority and reliability rules in [references/source-priority.md](references/source-priority.md).
 - Prefer primary and authoritative sources first (FASB/SEC/AICPA standard-setting materials).
 - Use Big 4 publications as interpretive support, not sole authority.
-- Invoke FinResearchClaw whenever the user asks for a `memo`.
-- Memo-mode execution should wrap the FinResearchClaw repo/workflow even if the accounting issue is straightforward.
+- Invoke FinResearchClaw for every task handled by this skill, regardless of output format.
+- Execution for memo, email, and q-and-a outputs should all wrap the FinResearchClaw repo/workflow even if the accounting issue is straightforward.
 - The skill may create a task-local virtual environment for the run if needed.
-- Only skip the FinResearchClaw path if the repo is unavailable or fails to run after reasonable setup attempts, and if skipped, explicitly state that in the completion note.
+- Do not skip or bypass the FinResearchClaw path. If the repo is unavailable, dependencies are missing, or the workflow fails to run, stop and troubleshoot the FinResearchClaw environment first. The task should not proceed to substantive completion until the wrapped FinResearchClaw path is functioning.
 - If using FinResearchClaw, treat it as a research accelerator and drafting assistant only; independently verify accounting conclusions against authoritative and clearly labeled interpretive sources before finalizing.
 - Capture citation labels and URLs for each source used.
 
@@ -69,21 +69,21 @@ For formal, thorough memo drafting, this skill must wrap and leverage the local 
 - For formal memo output, produce a polished memorandum style with a complete professional header, well-formed section headings, narrative analysis paragraphs, explicit treatment of alternative views considered, and output quality suitable for management, auditors, or file documentation.
 - When FinResearchClaw is available, use it to improve thoroughness and professional drafting quality while preserving accounting-source hierarchy.
 - Do not allow raw JSON structures, Python dictionary renderings, placeholder header fields, or unformatted source dumps to appear in the final memo.
-- Preferred execution order for formal memo support: (1) authoritative accounting research and fact development first, (2) create/use a task-local virtual environment if needed, (3) run the FinResearchClaw repo/workflow as the required drafting/research wrapper, (4) final manual verification against ASC/SEC/AICPA and labeled interpretive guidance, (5) DOCX generation to `~/Downloads`.
+- Preferred execution order for all outputs under this skill: (1) authoritative accounting research and fact development first, (2) create/use a task-local virtual environment if needed, (3) run the FinResearchClaw repo/workflow as the required drafting/research wrapper, (4) final manual verification against ASC/SEC/AICPA and labeled interpretive guidance, and (5) generate the requested deliverable format.
 
 ### 6. Draft and Materialize DOCX
 
 - Build a JSON payload using [references/report-json-schema.md](references/report-json-schema.md).
 - For `memo` requests, save the output DOCX to `~/Downloads` by default (for example, `~/Downloads/<descriptive-file-name>.docx`).
-- Standard formal memo flow:
+- Standard wrapped workflow for all outputs:
   1. gather facts and clarifications;
   2. perform authoritative and interpretive accounting research;
   3. create/use a task-local virtual environment if needed for the run;
-  4. run the FinResearchClaw-supported drafting pass for all memo requests;
+  4. run the FinResearchClaw-supported drafting pass for every task under this skill;
   5. manually validate the final analysis, formatting, section structure, and citations;
-  6. generate the final DOCX in `~/Downloads`;
-  7. review the finished document for presentation quality before responding;
-  8. reply in chat with a short completion note and the saved file path instead of posting the memo body.
+  6. generate the requested deliverable format (DOCX for memo by default, or the requested email/q-and-a output);
+  7. review the finished output for presentation quality before responding;
+  8. reply in chat with the appropriate completion note for the chosen format.
 - Run:
 
 ```bash
@@ -109,7 +109,7 @@ python scripts/build_accounting_report_docx.py \
 - Confirm every external source in the analysis has a URL listed in the report.
 - Confirm the final memo reads like a professional memorandum rather than a raw data export.
 - Confirm headers are fully populated (for example To / From / Date / Subject) and that analysis sections render as proper prose, not serialized objects.
-- If a formal memo request did not use FinResearchClaw, explicitly document why not before closing the task.
+- No task under this skill may close without using the wrapped FinResearchClaw path successfully. If FinResearchClaw is not yet working, the required next step is to fix that environment rather than continue without it.
 
 ## Resources
 
