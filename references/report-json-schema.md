@@ -10,6 +10,10 @@ Use this structure as input to `scripts/build_accounting_report_docx.py`.
 - `analysis` (array of strings)
 - `conclusion` (string)
 
+## Formatting rule
+
+All string fields should contain final prose, not Markdown control syntax. Do not include raw heading markers (`#`, `##`, `###`, `####`), Markdown bullet prefixes, or other Markdown formatting tokens unless they are intended to appear literally in the final document.
+
 ## Recommended fields
 
 - `title` (string)

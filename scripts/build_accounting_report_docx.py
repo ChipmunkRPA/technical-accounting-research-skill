@@ -8,6 +8,7 @@ import json
 from datetime import date
 from pathlib import Path
 from typing import Any
+import re
 
 try:
     from docx import Document
@@ -44,6 +45,16 @@ def _as_list_of_dict(value: Any) -> list[dict[str, Any]]:
     return out
 
 
+def _strip_markdown_prefixes(text: str) -> str:
+    cleaned = _as_text(text)
+    if not cleaned:
+        return ""
+    cleaned = re.sub(r"^#{1,6}\s*", "", cleaned)
+    cleaned = re.sub(r"^[-*+]\s+", "", cleaned)
+    cleaned = re.sub(r"^\d+\.\s+", "", cleaned)
+    return cleaned.strip()
+
+
 def _set_default_style(doc: Document) -> None:
     style = doc.styles["Normal"]
     style.font.name = "Times New Roman"
@@ -65,11 +76,40 @@ def _add_heading(doc: Document, text: str, level: int) -> None:
         run.font.name = "Times New Roman"
 
 
+def _add_rich_text_block(doc: Document, text: str) -> None:
+    cleaned = _as_text(text)
+    if not cleaned:
+        return
+
+    for raw_line in cleaned.splitlines():
+        line = raw_line.strip()
+        if not line:
+            continue
+
+        heading_match = re.match(r"^(#{1,6})\s*(.+)$", line)
+        if heading_match:
+            level = min(len(heading_match.group(1)), 4)
+            _add_heading(doc, _strip_markdown_prefixes(heading_match.group(2)), level=level)
+            continue
+
+        bullet_match = re.match(r"^[-*+]\s+(.+)$", line)
+        if bullet_match:
+            doc.add_paragraph(_strip_markdown_prefixes(bullet_match.group(1)), style="List Bullet")
+            continue
+
+        number_match = re.match(r"^\d+\.\s+(.+)$", line)
+        if number_match:
+            doc.add_paragraph(_strip_markdown_prefixes(number_match.group(1)), style="List Number")
+            continue
+
+        doc.add_paragraph(line)
+
+
 def _add_heading_and_text(doc: Document, heading: str, text: str) -> None:
     if not text:
         return
     _add_heading(doc, heading, level=1)
-    doc.add_paragraph(_sanitize_text(text))
+    _add_rich_text_block(doc, text)
 
 
 def _add_heading_and_paragraphs(doc: Document, heading: str, items: list[str]) -> None:
@@ -77,13 +117,13 @@ def _add_heading_and_paragraphs(doc: Document, heading: str, items: list[str]) -
         return
     _add_heading(doc, heading, level=1)
     for item in items:
-        doc.add_paragraph(_sanitize_text(item))
+        cleaned_item = _strip_markdown_prefixes(item)
+        if cleaned_item:
+            doc.add_paragraph(cleaned_item, style="List Bullet")
 
 
 def _sanitize_text(text: str) -> str:
     """Basic cleanup of markdown symbols to avoid literal rendering."""
-    # This is a best-effort cleanup for bold/italic markers if model leaks them
-    # True markdown conversion would be more complex, but this addresses the '####' and '***' issues.
     s = text.replace("####", "").replace("###", "").replace("##", "").replace("#", "")
     s = s.replace("***", "").replace("**", "").replace("__", "").replace("*", "").replace("_", "")
     return s.strip()

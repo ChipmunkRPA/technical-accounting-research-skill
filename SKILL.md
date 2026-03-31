@@ -102,6 +102,7 @@ For all tasks under this skill — memo, email, and q-and-a alike — the workfl
   8. review the finished output for presentation quality before responding;
   9. reply in chat with the appropriate completion note for the chosen format.
 - Do not use a Markdown-to-DOCX path that can preserve raw Markdown notation in the final document. If the chosen conversion method leaves visible Markdown markers, treat that as a failed output and regenerate the memo with a native DOCX creation path.
+- **Do not pass Markdown syntax through as final DOCX prose.** Convert section labels into schema fields and provide plain text content for paragraphs, bullets, and conclusions. The generated Word document must use native Word headings/lists rather than visible Markdown markers such as `#`, `##`, `###`, or `####`.
 - Run:
 
 ```bash
