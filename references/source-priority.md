@@ -21,8 +21,10 @@ Use sources in this order and label each source accordingly in the report.
 
 - Identify the accounting question first (recognition, measurement, presentation, disclosure).
 - Collect at least one authoritative source for each major conclusion.
+- For memo-mode conclusions, target at least 5 authoritative references in total across the core accounting positions, disclosure implications, and key judgment points wherever the issue reasonably permits.
 - Use Big 4 or other secondary sources to interpret complex application questions.
 - If authoritative text is inaccessible due licensing, disclose that limitation and cite publicly available ASU/SEC/AICPA material plus clearly labeled interpretive sources.
+- If fewer than 5 authoritative references are genuinely available for the issue, state that explicitly in the memo and explain why the authoritative source set is narrower than usual.
 
 ## Citation Standards
 

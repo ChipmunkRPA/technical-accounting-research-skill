@@ -29,6 +29,8 @@ For all tasks under this skill — memo, email, and q-and-a alike — the workfl
 - The skill may create and activate a task-local virtual environment to run FinResearchClaw, supporting scripts, and output-generation dependencies.
 - Distinguish authoritative guidance from interpretive guidance.
 - Cite sources with links and accessed date in the deliverable.
+- Include at least **5 authoritative references** supporting the accounting conclusion unless fewer are genuinely available for the issue; if fewer than 5 authoritative references can be identified, disclose that constraint explicitly and supplement with clearly labeled interpretive guidance.
+- If the user does not provide a company name for a memo or memo-style deliverable, default to the neutral defined party name **"Company"** throughout the document. Do not substitute other role labels such as "vendor," "customer," or similar labels as the primary unnamed entity reference unless the fact pattern itself requires naming multiple counterparties distinctly.
 - State assumptions explicitly when facts remain unknown.
 - Do not let FinResearchClaw-style output replace authoritative accounting analysis; use it to strengthen organization and completeness, not to dilute source hierarchy.
 
@@ -59,6 +61,7 @@ For all tasks under this skill — memo, email, and q-and-a alike — the workfl
 - Research sources using the priority and reliability rules in [references/source-priority.md](references/source-priority.md).
 - Prefer primary and authoritative sources first (FASB/SEC/AICPA standard-setting materials).
 - Use Big 4 publications as interpretive support, not sole authority.
+- For a memo conclusion, target at least **5 authoritative references** across the conclusion, disclosure direction, and key technical positions wherever the issue reasonably permits.
 - Invoke FinResearchClaw for every task handled by this skill, regardless of output format.
 - Execution for memo, email, and q-and-a outputs should all wrap the FinResearchClaw repo/workflow even if the accounting issue is straightforward.
 - The FinResearchClaw-backed run must occur before any user-facing technical conclusion is given. Do not short-circuit from clarified facts directly to an accounting answer.
@@ -77,6 +80,7 @@ For all tasks under this skill — memo, email, and q-and-a alike — the workfl
 - Conclude with recommended accounting treatment, disclosure direction, and key risks.
 - Include journal entry examples when useful for implementation.
 - For formal memo output, produce a polished memorandum style with a complete professional header and well-formed section headings (no numbers).
+- If no company name is specified by the user, define the reporting entity as **"Company"** and use that term consistently throughout the memo.
 - Analysis and all other sections must use descriptive, narrative paragraphs instead of bullet points or numbered lists.
 - When FinResearchClaw is available, use it to improve thoroughness and professional drafting quality while preserving accounting-source hierarchy.
 - Do not allow raw JSON structures, Python dictionary renderings, placeholder header fields, unformatted source dumps, or visible Markdown markers to appear in the final memo.
@@ -92,10 +96,11 @@ For all tasks under this skill — memo, email, and q-and-a alike — the workfl
   2. perform authoritative and interpretive accounting research;
   3. create/use a task-local virtual environment if needed for the run;
   4. run the FinResearchClaw-supported drafting pass for every task under this skill;
-  5. manually validate the final analysis, formatting, section structure, and citations;
-  6. generate the requested deliverable format (DOCX for memo by default, or the requested email/q-and-a output) using a conversion path that renders headings, paragraphs, bullets, and tables as native document elements rather than leaving Markdown markers visible;
-  7. review the finished output for presentation quality before responding;
-  8. reply in chat with the appropriate completion note for the chosen format.
+  5. during memo-mode execution, send a short in-progress status update to the user at least every 1 minute until the memo workflow finishes or fails; each update should briefly state the current stage (for example fact gathering, authoritative research, FinResearchClaw run, memo drafting, citation verification, or DOCX generation);
+  6. manually validate the final analysis, formatting, section structure, entity naming consistency, and citations;
+  7. generate the requested deliverable format (DOCX for memo by default, or the requested email/q-and-a output) using a conversion path that renders headings, paragraphs, bullets, and tables as native document elements rather than leaving Markdown markers visible;
+  8. review the finished output for presentation quality before responding;
+  9. reply in chat with the appropriate completion note for the chosen format.
 - Do not use a Markdown-to-DOCX path that can preserve raw Markdown notation in the final document. If the chosen conversion method leaves visible Markdown markers, treat that as a failed output and regenerate the memo with a native DOCX creation path.
 - Run:
 
@@ -122,6 +127,8 @@ python scripts/build_accounting_report_docx.py \
 - Confirm every external source in the analysis has a URL listed in the report.
 - Confirm the final memo reads like a professional memorandum rather than a raw data export.
 - Confirm headers are fully populated (for example To / From / Date / Subject) and that analysis sections render as proper prose, not serialized objects.
+- Confirm the memo uses **"Company"** consistently when no specific company name was provided.
+- Confirm the conclusion is supported by at least **5 authoritative references**, or that any shortfall is explicitly disclosed and justified.
 - Confirm the rendered DOCX contains no visible Markdown syntax such as heading hashes, fenced code blocks, or raw list notation.
 - No task under this skill may close without using the wrapped FinResearchClaw path successfully. If FinResearchClaw is not yet working, the required next step is to fix that environment rather than continue without it.
 
