@@ -18,6 +18,11 @@ For all tasks under this skill — memo, email, and q-and-a alike — the workfl
 - If the user asks for a `memo`, default the deliverable to a `.docx` file saved in the user's `~/Downloads` folder unless the user explicitly requests a different location or format.
 - For `memo` requests, do not post the full memo body directly into chat by default. Instead, generate the DOCX deliverable and reply with a short status note that the file was created and where it was saved.
 - The final memo DOCX must be client-ready and must not expose Markdown syntax (for example `#`, `##`, `###`, `####`, bullet markers used as raw source notation, or fenced code blocks) anywhere in the rendered document.
+- **Avoid bullet points** in the final memo; use separate, meaningful, and structured narrative paragraphs for all sections.
+- **Avoid numbered sections**; use proper professional formatting for section headings without prepended numbers.
+- The memo and any delivered document must use **Times New Roman, 12pt, black font**.
+- **Avoid Markdown symbols** like `***` or `**` (for bold) if they might be rendered literally; use native DOCX formatting.
+- **Mandatory Real-Life Example**: Always perform a web search to find and include a real-world accounting example (public SEC filings preferred) or a secondary reference material example to demonstrate the practical application of the accounting treatment.
 - Research the internet before final conclusions, even if guidance seems familiar.
 - For all requests under this skill, use FinResearchClaw as a required wrapped execution and drafting layer.
 - Do not present, summarize, or imply a substantive accounting conclusion to the user before the required FinResearchClaw-backed flow has been run, except to restate assumptions, ask clarifying questions, or explain that the analysis is still in progress.
@@ -63,14 +68,16 @@ For all tasks under this skill — memo, email, and q-and-a alike — the workfl
 - If using FinResearchClaw, treat it as a research accelerator and drafting assistant only; independently verify accounting conclusions against authoritative and clearly labeled interpretive sources before finalizing.
 - Capture citation labels and URLs for each source used.
 
-### 5. Technical Analysis
+### 5. Technical Analysis and Illustration
 
 - Frame the accounting issue.
 - Map facts to recognition, measurement, presentation, and disclosure guidance.
+- **Real-Life Illustration (Mandatory)**: Find and include a descriptive summary of a real-world case (e.g., an SEC filer's 10-K/Q disclosure) that mirrors the fact pattern. Explain how they applied the standard.
 - Evaluate reasonable alternatives and explain rejection rationale.
 - Conclude with recommended accounting treatment, disclosure direction, and key risks.
 - Include journal entry examples when useful for implementation.
-- For formal memo output, produce a polished memorandum style with a complete professional header, well-formed section headings, narrative analysis paragraphs, explicit treatment of alternative views considered, and output quality suitable for management, auditors, or file documentation.
+- For formal memo output, produce a polished memorandum style with a complete professional header and well-formed section headings (no numbers).
+- Analysis and all other sections must use descriptive, narrative paragraphs instead of bullet points or numbered lists.
 - When FinResearchClaw is available, use it to improve thoroughness and professional drafting quality while preserving accounting-source hierarchy.
 - Do not allow raw JSON structures, Python dictionary renderings, placeholder header fields, unformatted source dumps, or visible Markdown markers to appear in the final memo.
 - If a drafting pass begins in Markdown, the final DOCX generation step must fully convert that draft into native memorandum formatting rather than packaging the Markdown text as-is.
