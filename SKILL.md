@@ -7,9 +7,20 @@ description: Research technical accounting treatment and financial statement dis
 
 ## Overview
 
-Handle transaction-specific accounting questions through a fixed sequence: gather facts, confirm output format, route the task through the wrapped local FinResearchClaw repo/workflow, research guidance online, apply standards, and deliver the requested output.
+Handle transaction-specific accounting questions through a fixed sequence: gather facts, confirm output format, ensure the local FinResearchClaw repo is installed and runnable, route the task through that wrapped repo/workflow, research guidance online, apply standards, and deliver the requested output.
 
 For all tasks under this skill — memo, email, and q-and-a alike — the workflow must wrap and leverage the local FinResearchClaw repo/workflow as a required research-and-drafting execution layer. This is mandatory, not optional, and applies even when the accounting issue appears straightforward. The skill may create and use a task-local virtual environment when needed to run the repo or supporting document-generation dependencies. FinResearchClaw is a required support engine for research depth and drafting quality across all output modes; authoritative accounting conclusions must still be grounded in ASC / SEC / AICPA / clearly labeled interpretive guidance.
+
+## Prerequisites
+
+Before using this skill for substantive completion, install and make available the local FinResearchClaw repo:
+
+1. Clone or install `https://github.com/ChipmunkRPA/FinResearchClaw`
+2. Ensure the local repo is available at `~/.openclaw/workspace/AutoResearchClaw` unless a different local path is intentionally configured
+3. Ensure Python is available and create a task-local virtual environment when needed
+4. Install memo-generation dependencies such as `python-docx` when DOCX output is required
+
+If FinResearchClaw is not installed locally and runnable, do not treat the full research workflow as ready. Fix that prerequisite first.
 
 ## Required Behavior
 
@@ -68,6 +79,7 @@ For all tasks under this skill — memo, email, and q-and-a alike — the workfl
 - The skill may create a task-local virtual environment for the run if needed.
 - Do not skip or bypass the FinResearchClaw path. If the repo is unavailable, dependencies are missing, or the workflow fails to run, stop and troubleshoot the FinResearchClaw environment first. The task should not proceed to substantive completion until the wrapped FinResearchClaw path is functioning.
 - Do not surface an accounting conclusion before this stage is completed successfully.
+- At the start of a live task, explicitly verify that FinResearchClaw is installed locally and that the configured repo path exists before relying on the wrapped workflow.
 - If using FinResearchClaw, treat it as a research accelerator and drafting assistant only; independently verify accounting conclusions against authoritative and clearly labeled interpretive sources before finalizing.
 - Capture citation labels and URLs for each source used.
 
