@@ -91,7 +91,7 @@ If FinResearchClaw is not installed locally and runnable, do not treat the full 
 - Evaluate reasonable alternatives and explain rejection rationale.
 - Conclude with recommended accounting treatment, disclosure direction, and key risks.
 - Include journal entry examples when useful for implementation.
-- For formal memo output, produce a polished memorandum style with a complete professional header and well-formed section headings (no numbers).
+- For formal memo output, produce a polished memorandum style with a complete professional header and well-formed section headings (no numbers), narrative analysis paragraphs, explicit treatment of alternative views considered, and output quality suitable for management, auditors, or file documentation.
 - If no company name is specified by the user, define the reporting entity as **"Company"** and use that term consistently throughout the memo.
 - Analysis and all other sections must use descriptive, narrative paragraphs instead of bullet points or numbered lists.
 - When FinResearchClaw is available, use it to improve thoroughness and professional drafting quality while preserving accounting-source hierarchy.
